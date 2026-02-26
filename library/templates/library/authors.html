@@ -1,0 +1,26 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Authors 🖋️</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for author in authors %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ author.name }}</h5>
+                    <p class="card-text">{{ author.bio|truncatewords:20 }}</p>
+                    <p class="card-text">
+                        <span class="badge bg-info">{{ author.book_set.count }} Books</span>
+                    </p>
+                    <a href="{% url 'author_books' author.id %}" class="btn btn-outline-primary mt-2">View Books</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted text-center">No authors found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

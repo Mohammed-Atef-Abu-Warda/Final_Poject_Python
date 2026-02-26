@@ -1,0 +1,29 @@
+{% extends 'library/base.html' %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+
+
+
+
+<h2>Contact Us</h2>
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Name</label>
+        {{ form.name }}
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        {{ form.email }}
+    </div>
+    <div class="mb-3">
+        <label>Subject</label>
+        {{ form.subject }}
+    </div>
+    <div class="mb-3">
+        <label>Message</label>
+        {{ form.message }}
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+{% endblock %}

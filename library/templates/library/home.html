@@ -1,0 +1,70 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Welcome to Electronic Library 📚</h1>
+
+    <!-- Latest Books Section -->
+    <h2 class="mb-3">Latest Books</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for book in recent_books %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <a href="{% url 'book_details' book.id %}" class="btn btn-primary mt-2">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">No books available</p>
+        {% endfor %}
+    </div>
+
+    <!-- Top Rated Books Section -->
+    <h2 class="mt-5 mb-3">Top Rated Books</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for book in top_rated %}
+        <div class="col">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <a href="{% url 'book_details' book.id %}" class="btn btn-success mt-2">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">No top-rated books available</p>
+        {% endfor %}
+    </div>
+
+    <!-- Library Statistics Section -->
+    <h2 class="mt-5 mb-3">Library Statistics</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card bg-info text-white shadow-sm">
+                <div class="card-body">
+                    <h3>{{ stats.books }}</h3>
+                    <p>Books</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card bg-warning text-dark shadow-sm">
+                <div class="card-body">
+                    <h3>{{ stats.authors }}</h3>
+                    <p>Authors</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card bg-success text-white shadow-sm">
+                <div class="card-body">
+                    <h3>{{ stats.students }}</h3>
+                    <p>Students</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
