@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-rg08rhl&8kt(low2az31q(t=j!)pen-)abfe&(sfu6u1=b3m+z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -50,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'library.middleware.VisitLoggerMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'library_management.urls'
@@ -128,7 +128,8 @@ USE_TZ = True
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # تأكد من أن هذا الجزء يطابق مسار المجلد الذي أنشأته
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -152,3 +153,4 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'error',
 }
+
