@@ -23,6 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rg08rhl&8kt(low2az31q(t=j!)pen-)abfe&(sfu6u1=b3m+z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+
+# إعدادات الملفات الثابتة (Static Files)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
