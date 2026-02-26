@@ -1,0 +1,67 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="mb-4 fw-bold">📚 My Borrowed Books</h2>
+
+    <div class="row">
+        {% for borrow in borrowed_books %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+
+                    <!-- صورة الغلاف -->
+                    {% if borrow.book.cover_image %}
+                        <img src="{{ borrow.book.cover_image.url }}"
+                             class="card-img-top"
+                             style="height: 280px; object-fit: cover;"
+                             alt="{{ borrow.book.title }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x400?text=No+Cover"
+                             class="card-img-top"
+                             style="height: 280px; object-fit: cover;"
+                             alt="No cover">
+                    {% endif %}
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">
+                            {{ borrow.book.title }}
+                        </h5>
+
+                        <p class="text-muted mb-2">
+                            {{ borrow.book.author }}
+                        </p>
+
+                        <p class="small mb-1">
+                            <strong>Borrowed on:</strong>
+                            {{ borrow.borrow_date }}
+                        </p>
+
+                        <p class="small mb-3">
+                            <strong>Expected return:</strong>
+                            {{ borrow.expected_return_date }}
+                        </p>
+
+                        <form method="post"
+                              action="{% url 'return_book' borrow_id=borrow.id %}"
+                              class="mt-auto">
+                            {% csrf_token %}
+                            <button class="btn btn-warning w-100">
+                                🔄 Return Book
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    You haven't borrowed any books yet 📭
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

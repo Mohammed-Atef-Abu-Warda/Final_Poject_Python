@@ -1,0 +1,25 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Categories 📂</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for category in categories %}
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-text">
+                        <span class="badge bg-primary">{{ category.book_set.count }} Books</span>
+                    </p>
+                    <a href="{% url 'category_books' category.id %}" class="btn btn-outline-primary mt-2">View Books</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted text-center">No categories available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

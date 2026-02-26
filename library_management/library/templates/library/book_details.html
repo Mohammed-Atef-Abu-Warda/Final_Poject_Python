@@ -1,0 +1,121 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2>{{ book.title }}</h2>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
+
+    <h3>Average Rating:
+        {% if average_rating %}
+            {{ average_rating|floatformat:1 }} / 5
+        {% else %}
+            No ratings yet
+        {% endif %}
+    </h3>
+
+    {% if user.is_authenticated %}
+        {% if not user_borrowed %}
+            <form method="POST" action="{% url 'borrow_book' book_id=book.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success mb-3">Borrow this book</button>
+            </form>
+        {% else %}
+            <button class="btn btn-secondary mb-3" disabled>You have already borrowed this book</button>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary mb-3">Please log in to borrow this book</a>
+    {% endif %}
+
+    <h3 class="mt-5">Reviews</h3>
+        {% if user.is_authenticated %}
+            <a href="{% url 'add_review' book.id %}" class="btn btn-outline-primary mb-4">
+                Add Your Review
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary mb-3">
+                Please log in to add a review
+            </a>
+        {% endif %}
+
+    {% if reviews %}
+        {% for review in reviews %}
+        <div class="card mb-3 {% if review.user == user %}border-primary bg-light{% endif %}">
+            <div class="card-body">
+
+                <div class="d-flex align-items-center mb-2">
+
+                    
+                            
+                    <!-- صورة الطالب -->
+                    {% if review.user.profile and review.user.profile.photo %}
+                        <img src="{{ review.user.profile.photo.url }}" alt="Profile Photo"
+                            class="rounded-circle me-3" width="60" height="60" style="object-fit: cover;">
+                    {% else %}
+                        <img src="https://via.placeholder.com/60"  class="rounded-circle me-3">
+                    {% endif %}
+
+                    <div>
+                        <!-- اسم الطالب -->
+                        <h6 class="fw-bold mb-0">
+                            {{ review.user.username }}
+                            {% if review.user == user %}
+                                <span class="badge bg-primary ms-2">Your Review</span>
+                            {% endif %}
+                        </h6>
+
+                        <!-- تاريخ المراجعة -->
+                        <small class="text-muted">
+                            {{ review.created_at|date:"F d, Y" }}
+                        </small>
+                    </div>
+                </div>
+
+                <!-- عدد النجوم -->
+                <p class="mb-1 text-warning">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            ⭐
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                    ({{ review.rating }}/5)
+                </p>
+
+                <!-- التعليق -->
+                <p class="mb-0">"{{ review.comment }}"</p>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">No reviews yet.</div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+{#{{% if user.is_authenticated %}#}
+{#        {% if user_borrowed %}#}
+{#            <!-- إذا كان المستخدم قد استعار الكتاب، يظهر له زر إرجاع الكتاب -->#}
+{#            <form method="POST" action="{% url 'return_book' borrow_id=borrow_instance.id %}">#}
+{#                {% csrf_token %}#}
+{#                <button type="submit" class="btn btn-warning">#}
+{#                    Return this book#}
+{#                </button>#}
+{#            </form>#}
+{#        {% else %}#}
+{#            <!-- إذا لم يكن المستخدم قد استعار الكتاب بعد، يظهر له زر استعارة الكتاب -->#}
+{#            <form method="POST" action="{% url 'borrow_book' book_id=book.id %}">#}
+{#                {% csrf_token %}#}
+{#                <button type="submit" class="btn btn-success">#}
+{#                    Borrow this book#}
+{#                </button>#}
+{#            </form>#}
+{#{% endif %}#}
+{#    <p><a href="{% url 'login' %}">Log in</a> to add a review.</p>#}
+{#{% endif %}#}
+

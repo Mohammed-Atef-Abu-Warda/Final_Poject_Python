@@ -1,0 +1,27 @@
+{% extends 'library/base.html' %}
+{% load static %}  
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Profile</h2>
+<div class="row">
+    <div class="col-md-4">
+        {% if user.profile.profile_pic %}
+            <img src="{{ user.profile.profile_pic.url }}" class="img-fluid rounded-circle" alt="Profile">
+        {% else %}
+            <img src="{% static 'images/default.png' %}" class="img-fluid rounded-circle" alt="Profile">
+        {% endif %}
+    </div>
+    <div class="col-md-8">
+        <p><strong>Name:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.profile.phone }}</p>
+        <p><strong>Registration Date:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+        <p><strong>Currently Borrowed:</strong> {{ currently_borrowed_count }}</p>
+        <p><strong>Total Borrowed:</strong> {{ total_borrowed_count }}</p>
+
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}
