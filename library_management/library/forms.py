@@ -44,21 +44,7 @@ class LoginForm(forms.Form):
 
 
 
-# class ContactForm(forms.ModelForm):
-#     name = forms.CharField(
-#         max_length=100,
-#         widget=forms.TextInput(attrs={'placeholder': 'Your Name', 'class': 'form-control'})
-#     )
-#     email = forms.EmailField(
-#         widget=forms.EmailInput(attrs={'placeholder': 'Your Email', 'class': 'form-control'})
-#     )
-#     subject = forms.CharField(
-#         max_length=200,
-#         widget=forms.TextInput(attrs={'placeholder': 'Subject', 'class': 'form-control'})
-#     )
-#     message = forms.CharField(
-#         widget=forms.Textarea(attrs={'placeholder': 'Your Message', 'class': 'form-control', 'rows': 5})
-#     )
+
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -90,11 +76,7 @@ class ProfileForm(forms.ModelForm):
 
 
 
-# class ContactForm(forms.ModelForm):
-#     class Meta:
-#         model = ContactMessage
-#         fields = ['name', 'email', 'subject', 'message']
-#
+
 
 
 
@@ -106,4 +88,5 @@ class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['rating'].widget.attrs.update({'class': 'form-control'})
+
         self.fields['comment'].widget.attrs.update({'class': 'form-control'})
