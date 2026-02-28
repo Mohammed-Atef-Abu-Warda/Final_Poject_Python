@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-rg08rhl&8kt(low2az31q(t=j!)pen-)abfe&(sfu6u1=b3m+z
 
 
 # الخيار الأسهل والأضمن لكل المنصات:
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+
 # إعدادات الملفات الثابتة (Static Files)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
