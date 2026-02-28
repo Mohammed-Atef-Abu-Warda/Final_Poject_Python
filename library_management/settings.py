@@ -37,7 +37,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEBUG = True
 
+from django.contrib.auth.models import User
 
+if not User.objects.filter(username="admin2").exists():
+    User.objects.create_superuser("admin2", "admin2@gmail.com", "12345678")
 
 # Application definition
 
